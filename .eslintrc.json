@@ -3,6 +3,7 @@
     "browser": true,
     "es2021": true
   },
+  "ignorePatterns": ["node_modules", "dist", "build"],
   "extends": ["plugin:react/recommended", "airbnb", "prettier"],
   "parser": "@babel/eslint-parser",
   "parserOptions": {
