@@ -25,12 +25,16 @@ export default class NewTaskForm extends React.Component {
   onSubmit = (e) => {
     e.preventDefault()
     this.props.onItemAdded(this.state.value)
+    this.setState({
+      value: '',
+    })
   }
 
   render() {
     return (
       <form onSubmit={this.onSubmit}>
         <input
+          value={this.state.value}
           type="text"
           onChange={this.onValueChange}
           className="new-todo"

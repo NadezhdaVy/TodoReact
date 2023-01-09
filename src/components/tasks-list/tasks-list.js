@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import classNames from 'classnames'
 
 import TaskItem from '../task-item'
 import EditTask from '../edit-task'
@@ -28,7 +29,7 @@ export default class TasksList extends React.Component {
     return (
       <ul className="todo-list">
         {todos.map((item) => (
-          <li className={item.completed ? 'completed' : item.editing ? 'editing' : ' '} key={item.id}>
+          <li className={classNames({ completed: item.completed }, { editing: item.editing })} key={item.id}>
             <TaskItem
               value={item}
               onEdit={() => onEdit(item.id)}
@@ -36,7 +37,7 @@ export default class TasksList extends React.Component {
               onCompleted={() => onCompleted(item.id)}
             />
 
-            <EditTask task={item} onItemEditing={(text, id) => onItemEditing(text, id)} />
+            <EditTask task={item} onItemEditing={(text, id) => onItemEditing(text, id)} bool={item.completed} />
           </li>
         ))}
       </ul>

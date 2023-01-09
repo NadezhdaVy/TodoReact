@@ -26,7 +26,14 @@ export default class TaskItem extends React.Component {
 
     return (
       <div className="view">
-        <input className="toggle" type="checkbox" id={value.id} onClick={() => onCompleted()} />
+        <input
+          className="toggle"
+          type="checkbox"
+          id={value.id}
+          checked={value.completed}
+          readOnly
+          onClick={() => onCompleted()}
+        />
         <label htmlFor={value.id}>
           <span className="description"> {value.text}</span>
           <span className="created">

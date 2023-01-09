@@ -20,13 +20,14 @@ export default class App extends React.Component {
 
   addItem = (text) => {
     const newItem = this.createNewTask(text)
-
-    this.setState(({ items }) => {
-      const newArr = [...items, newItem]
-      return {
-        items: newArr,
-      }
-    })
+    if (text.trim()) {
+      this.setState(({ items }) => {
+        const newArr = [...items, newItem]
+        return {
+          items: newArr,
+        }
+      })
+    }
   }
 
   currentFilter = (items, filter) => {
