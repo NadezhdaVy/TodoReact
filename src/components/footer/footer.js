@@ -1,30 +1,30 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import TasksFilter from '../tasks-filter';
-import './footer.css';
+import TasksFilter from '../tasks-filter'
+import './footer.css'
 
 export default class Footer extends React.Component {
   static defaultProps = {
     onClearAllCompleted: () => {},
     onFilterChange: () => {},
     itemsLeft: () => {},
-  };
+  }
 
   static propTypes = {
     onClearAllCompleted: PropTypes.func,
     onFilterChange: PropTypes.func,
     itemsLeft: PropTypes.func,
     items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  };
+  }
 
   render() {
-    const { itemsLeft } = this.props;
+    const { itemsLeft } = this.props
 
-    let className = 'footer';
+    let className = 'footer'
 
     if (this.props.items.length === 0) {
-      className += ' hidden';
+      className += ' hidden'
     }
 
     return (
@@ -37,6 +37,6 @@ export default class Footer extends React.Component {
           Clear completed
         </button>
       </footer>
-    );
+    )
   }
 }

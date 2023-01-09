@@ -1,3 +1,3 @@
-import EditTask from './edit-task';
+import EditTask from './edit-task'
 
-export default EditTask;
+export default EditTask

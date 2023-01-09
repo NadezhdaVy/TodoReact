@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 
-import TasksList from '../tasks-list';
-import NewTask from '../new-task-form';
-import Footer from '../footer';
+import TasksList from '../tasks-list'
+import NewTask from '../new-task-form'
+import Footer from '../footer'
 
-import './app.css';
+import './app.css'
 
 export default class App extends React.Component {
-  maxId = 100;
+  maxId = 100
 
   state = {
     items: [
@@ -16,76 +16,76 @@ export default class App extends React.Component {
       this.createNewTask('Active task'),
     ],
     filter: 'all',
-  };
+  }
 
   addItem = (text) => {
-    const newItem = this.createNewTask(text);
+    const newItem = this.createNewTask(text)
 
     this.setState(({ items }) => {
-      const newArr = [...items, newItem];
+      const newArr = [...items, newItem]
       return {
         items: newArr,
-      };
-    });
-  };
+      }
+    })
+  }
 
   currentFilter = (items, filter) => {
     switch (filter) {
       case 'all':
-        return items;
+        return items
       case 'active':
-        return items.filter((item) => !item.completed);
+        return items.filter((item) => !item.completed)
       case 'completed':
-        return items.filter((item) => item.completed);
+        return items.filter((item) => item.completed)
       default:
-        return items;
+        return items
     }
-  };
+  }
 
   deleteTask = (id) => {
     this.setState(({ items }) => {
-      const index = items.findIndex((el) => el.id === id);
-      const newArr = [...items.slice(0, index), ...items.slice(index + 1)];
+      const index = items.findIndex((el) => el.id === id)
+      const newArr = [...items.slice(0, index), ...items.slice(index + 1)]
       return {
         items: newArr,
-      };
-    });
-  };
+      }
+    })
+  }
 
   editTask = (id) => {
     this.setState(({ items }) => ({
       items: this.toggleProperty(items, id, 'editing'),
-    }));
-  };
+    }))
+  }
 
   clearAllCompleted = () => {
     this.setState(({ items }) => {
-      const newArr = items.filter((el) => !el.completed);
+      const newArr = items.filter((el) => !el.completed)
       return {
         items: newArr,
-      };
-    });
-  };
+      }
+    })
+  }
 
   leftTasks = () => {
-    const countActiveTasks = this.state.items.filter((el) => !el.completed).length;
-    return countActiveTasks;
-  };
+    const countActiveTasks = this.state.items.filter((el) => !el.completed).length
+    return countActiveTasks
+  }
 
   completeTask = (id) => {
     this.setState(({ items }) => ({
       items: this.toggleProperty(items, id, 'completed'),
-    }));
-  };
+    }))
+  }
 
   updateItem = (text, id) => {
     this.setState(({ items }) => ({
       items: this.toggleProperty(items, id, 'editing', text),
-    }));
-  };
+    }))
+  }
 
   changeFilter(filter) {
-    this.setState({ filter });
+    this.setState({ filter })
   }
 
   createNewTask(value) {
@@ -95,22 +95,22 @@ export default class App extends React.Component {
       editing: false,
       id: this.maxId++,
       date: new Date(),
-    };
+    }
   }
 
   toggleProperty(arr, id, propName, val) {
-    const idx = arr.findIndex((el) => el.id === id);
+    const idx = arr.findIndex((el) => el.id === id)
     if (val === undefined) {
-      val = arr[idx].text;
+      val = arr[idx].text
     }
-    const oldItem = arr[idx];
-    const newItem = { ...oldItem, [propName]: !oldItem[propName], text: val };
+    const oldItem = arr[idx]
+    const newItem = { ...oldItem, [propName]: !oldItem[propName], text: val }
 
-    return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)];
+    return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)]
   }
 
   render() {
-    const showTasks = this.currentFilter(this.state.items, this.state.filter);
+    const showTasks = this.currentFilter(this.state.items, this.state.filter)
     return (
       <div className="todoapp">
         <header className="header">
@@ -134,6 +134,6 @@ export default class App extends React.Component {
           />
         </main>
       </div>
-    );
+    )
   }
 }

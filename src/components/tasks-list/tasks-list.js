@@ -1,10 +1,10 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import TaskItem from '../task-item';
-import EditTask from '../edit-task';
+import TaskItem from '../task-item'
+import EditTask from '../edit-task'
 
-import './tasks-list.css';
+import './tasks-list.css'
 
 export default class TasksList extends React.Component {
   static defaultProps = {
@@ -12,7 +12,7 @@ export default class TasksList extends React.Component {
     onItemEditing: () => {},
     onDeleted: () => {},
     onCompleted: () => {},
-  };
+  }
 
   static propTypes = {
     onEdit: PropTypes.func,
@@ -20,10 +20,10 @@ export default class TasksList extends React.Component {
     onDeleted: PropTypes.func,
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     onCompleted: PropTypes.func,
-  };
+  }
 
   render() {
-    const { onDeleted, onCompleted, todos, onEdit, onItemEditing } = this.props;
+    const { onDeleted, onCompleted, todos, onEdit, onItemEditing } = this.props
 
     return (
       <ul className="todo-list">
@@ -40,6 +40,6 @@ export default class TasksList extends React.Component {
           </li>
         ))}
       </ul>
-    );
+    )
   }
 }

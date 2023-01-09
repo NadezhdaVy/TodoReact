@@ -1,31 +1,31 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import './new-task-form.css';
+import './new-task-form.css'
 
 export default class NewTaskForm extends React.Component {
   static defaultProps = {
     onItemAdded: () => {},
-  };
+  }
 
   static propTypes = {
     onItemAdded: PropTypes.func,
-  };
+  }
 
   state = {
     value: '',
-  };
+  }
 
   onValueChange = (e) => {
     this.setState({
       value: e.target.value,
-    });
-  };
+    })
+  }
 
   onSubmit = (e) => {
-    e.preventDefault();
-    this.props.onItemAdded(this.state.value);
-  };
+    e.preventDefault()
+    this.props.onItemAdded(this.state.value)
+  }
 
   render() {
     return (
@@ -38,6 +38,6 @@ export default class NewTaskForm extends React.Component {
           id="new-todo"
         />
       </form>
-    );
+    )
   }
 }

@@ -1,3 +1,3 @@
-import TasksFilter from './tasks-filer';
+import TasksFilter from './tasks-filer'
 
-export default TasksFilter;
+export default TasksFilter
