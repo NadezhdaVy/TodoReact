@@ -1,8 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import './edit-task.css'
-
 export default class EditTask extends React.Component {
   static defaultProps = {
     onItemEditing: () => {},

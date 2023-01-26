@@ -1,13 +1,13 @@
 import React from 'react'
 
 import TasksList from '../tasks-list'
-import NewTask from '../new-task-form'
+import NewTaskForm from '../new-task-form'
 import Footer from '../footer'
 
 import './app.css'
 
 export default class App extends React.Component {
-  maxId = 100
+  maxId = 1000
 
   state = {
     items: [
@@ -18,9 +18,21 @@ export default class App extends React.Component {
     filter: 'all',
   }
 
+  componentDidMount() {
+    this.timerID = 0
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID)
+    this.timerID = 0
+  }
+
   addItem = (text) => {
-    const newItem = this.createNewTask(text)
-    if (text.trim()) {
+    const textValue = text[0]
+    const timeValue = text[1] > 0 ? text[1] : text[1] * -1
+    if (textValue.trim()) {
+      const newItem = this.createNewTask(textValue, timeValue)
+
       this.setState(({ items }) => {
         const newArr = [...items, newItem]
         return {
@@ -85,18 +97,32 @@ export default class App extends React.Component {
     }))
   }
 
-  changeFilter(filter) {
-    this.setState({ filter })
+  updateTimer = (id, time) => {
+    this.setState(({ items }) => {
+      const idx = items.findIndex((el) => el.id === id)
+
+      const oldItem = items[idx]
+
+      const newItem = { ...oldItem, timer: time }
+
+      return { items: [...items.slice(0, idx), newItem, ...items.slice(idx + 1)] }
+    })
   }
 
-  createNewTask(value) {
+  createNewTask(value, timer = 10) {
     return {
       text: value,
       completed: false,
       editing: false,
       id: this.maxId++,
       date: new Date(),
+      timer,
+      timerIsActive: false,
     }
+  }
+
+  changeFilter(filter) {
+    this.setState({ filter })
   }
 
   toggleProperty(arr, id, propName, val) {
@@ -116,7 +142,7 @@ export default class App extends React.Component {
       <div className="todoapp">
         <header className="header">
           <h1>Todo</h1>
-          <NewTask onItemAdded={(text) => this.addItem(text)} />
+          <NewTaskForm onItemAdded={(text) => this.addItem(text)} />
         </header>
         <main className="main">
           <TasksList
@@ -125,6 +151,7 @@ export default class App extends React.Component {
             todos={showTasks}
             onCompleted={(id) => this.completeTask(id)}
             onItemEditing={(text, id) => this.updateItem(text, id)}
+            startTimer={(id, time) => this.updateTimer(id, time)}
           />
           <Footer
             onClearAllCompleted={() => this.clearAllCompleted()}

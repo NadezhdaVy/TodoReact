@@ -13,6 +13,7 @@ export default class TasksList extends React.Component {
     onItemEditing: () => {},
     onDeleted: () => {},
     onCompleted: () => {},
+    startTimer: () => {},
   }
 
   static propTypes = {
@@ -21,20 +22,22 @@ export default class TasksList extends React.Component {
     onDeleted: PropTypes.func,
     todos: PropTypes.arrayOf(PropTypes.object).isRequired,
     onCompleted: PropTypes.func,
+    startTimer: PropTypes.func,
   }
 
   render() {
-    const { onDeleted, onCompleted, todos, onEdit, onItemEditing } = this.props
+    const { onDeleted, onCompleted, todos, onEdit, onItemEditing, startTimer } = this.props
 
     return (
       <ul className="todo-list">
         {todos.map((item) => (
-          <li className={classNames({ completed: item.completed }, { editing: item.editing })} key={item.id}>
+          <li key={item.id} className={classNames({ completed: item.completed }, { editing: item.editing })}>
             <TaskItem
+              startTimer={(id, time) => startTimer(id, time)}
               value={item}
               onEdit={() => onEdit(item.id)}
-              onDeleted={() => onDeleted(item.id)}
-              onCompleted={() => onCompleted(item.id)}
+              onDeleted={(id) => onDeleted(id)}
+              onCompleted={(id) => onCompleted(id)}
             />
 
             <EditTask task={item} onItemEditing={(text, id) => onItemEditing(text, id)} bool={item.completed} />
