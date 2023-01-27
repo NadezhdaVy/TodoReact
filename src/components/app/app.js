@@ -109,7 +109,7 @@ export default class App extends React.Component {
     })
   }
 
-  createNewTask(value, timer = 10) {
+  createNewTask(value, timer = 0) {
     return {
       text: value,
       completed: false,
