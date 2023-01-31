@@ -24,6 +24,7 @@ export default class Timer extends React.Component {
 
   componentWillUnmount() {
     clearInterval(this.timerID)
+    this.props.startTimer(this.props.id, this.state.seconds)
   }
 
   playTimer = () => {
@@ -41,7 +42,6 @@ export default class Timer extends React.Component {
     const sec = this.state.seconds
     const seconds = sec - 1
     this.setState({ seconds, time: this.convertToTime(seconds) })
-    this.props.startTimer(this.props.id, seconds)
     if (seconds === 0) {
       clearInterval(this.timerID)
     }

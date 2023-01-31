@@ -29,7 +29,7 @@ export default class App extends React.Component {
 
   addItem = (text) => {
     const textValue = text[0]
-    const timeValue = text[1] > 0 ? text[1] : text[1] * -1
+    const timeValue = text[1]
     if (textValue.trim()) {
       const newItem = this.createNewTask(textValue, timeValue)
 
