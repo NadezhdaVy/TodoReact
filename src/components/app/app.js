@@ -18,15 +18,6 @@ export default class App extends React.Component {
     filter: 'all',
   }
 
-  componentDidMount() {
-    this.timerID = 0
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID)
-    this.timerID = 0
-  }
-
   addItem = (text) => {
     const textValue = text[0]
     const timeValue = text[1]
