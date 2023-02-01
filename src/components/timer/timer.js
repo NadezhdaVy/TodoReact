@@ -1,81 +1,63 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+// import PropTypes from 'prop-types'
 
 import './timer.css'
 
-export default class Timer extends React.Component {
-  static defaultProps = {
-    startTimer: () => {},
-  }
+function Timer({ timer, startTimer, id }) {
+  const [seconds, setSeconds] = useState(timer)
+  const [isActive, setIsActive] = useState(false)
+  const [time, setTime] = useState({})
 
-  static propTypes = {
-    startTimer: PropTypes.func,
-  }
-
-  timerID = 0
-
-  state = { seconds: this.props.timer, time: {} }
-
-  componentDidMount() {
-    const { seconds } = this.state
-    const timeLeft = this.convertToTime(seconds)
-    this.setState({ time: timeLeft })
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerID)
-    this.props.startTimer(this.props.id, this.state.seconds)
-  }
-
-  playTimer = () => {
-    if (this.timerID === 0 && this.state.seconds > 0) {
-      this.timerID = setInterval(() => this.countDown(), 1000)
-    }
-  }
-
-  stopTimer = () => {
-    clearInterval(this.timerID)
-    this.timerID = 0
-  }
-
-  countDown = () => {
-    const sec = this.state.seconds
-    const seconds = sec - 1
-    this.setState({ seconds, time: this.convertToTime(seconds) })
-    if (seconds === 0) {
-      clearInterval(this.timerID)
-    }
-  }
-
-  convertToTime = (sec) => {
+  const convertToTime = (sec) => {
     const minutes = Math.floor(sec / 60)
 
-    const seconds = Math.ceil(sec % 60)
+    const second = Math.ceil(sec % 60)
 
-    const obj = {
-      m: minutes,
-      s: seconds,
+    setTime({ m: minutes, s: second })
+  }
+
+  useEffect(() => {
+    if (seconds > 0) {
+      convertToTime(seconds)
     }
-    return obj
+  }, [seconds])
+
+  useEffect(() => {
+    let interval = null
+    if (isActive && seconds !== 0) {
+      interval = setInterval(() => {
+        setSeconds((sec) => sec - 1)
+      }, 1000)
+    } else if (seconds === 0) {
+      clearInterval(interval)
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval)
+    }
+    return () => {
+      startTimer(id, seconds)
+      clearInterval(interval)
+    }
+  }, [isActive, seconds])
+
+  const playTimer = () => {
+    setIsActive(true)
+  }
+  const stopTimer = () => {
+    setIsActive(false)
   }
 
-  render() {
-    return (
-      <div>
-        {this.props.timer === 0 ? null : (
-          <span className="description">
-            <button label="btn" type="button" className="icon icon-play" onClick={() => this.playTimer()} />
-            <button
-              label="btn"
-              type="button"
-              className="icon icon-pause"
-              onClick={() => this.stopTimer(this.props.id)}
-            />
+  return (
+    <div>
+      {seconds === 0 ? null : (
+        <span className="description">
+          <button label="btn" type="button" className="icon icon-play" onClick={() => playTimer()} />
+          <button label="btn" type="button" className="icon icon-pause" onClick={() => stopTimer()} />
 
-            {`${this.state.time.m} : ${this.state.time.s}`}
-          </span>
-        )}
-      </div>
-    )
-  }
+          {`${time.m} : ${time.s}`}
+        </span>
+      )}
+    </div>
+  )
 }
+
+export default Timer
