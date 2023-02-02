@@ -1,36 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-export default class EditTask extends React.Component {
-  static defaultProps = {
-    onItemEditing: () => {},
+function EditTask({ task: { text, id }, onItemEditing }) {
+  const [value, setValue] = useState(text)
+
+  const onValueChange = (e) => {
+    setValue(e.target.value)
   }
 
-  static propTypes = {
-    onItemEditing: PropTypes.func,
-    task: PropTypes.object.isRequired,
-  }
-
-  state = {
-    value: this.props.task.text,
-  }
-
-  onValueChange = (e) => {
-    this.setState({
-      value: e.target.value,
-    })
-  }
-
-  onSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault()
-    this.props.onItemEditing(this.state.value, this.props.task.id)
+    onItemEditing(value, id)
   }
 
-  render() {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <input type="text" className="edit" value={this.state.value} onChange={this.onValueChange} />
-      </form>
-    )
-  }
+  return (
+    <form onSubmit={onSubmit}>
+      <input type="text" className="edit" value={value} onChange={onValueChange} />
+    </form>
+  )
 }
+
+EditTask.defaultProps = {
+  onItemEditing: () => {},
+}
+
+EditTask.propTypes = {
+  onItemEditing: PropTypes.func,
+  task: PropTypes.object.isRequired,
+}
+
+export default EditTask

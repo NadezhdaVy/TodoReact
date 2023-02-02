@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import './timer.css'
 
@@ -58,6 +58,14 @@ function Timer({ timer, startTimer, id }) {
       )}
     </div>
   )
+}
+
+Timer.defaultProps = {
+  startTimer: () => {},
+}
+
+Timer.propTypes = {
+  startTimer: PropTypes.func,
 }
 
 export default Timer

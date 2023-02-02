@@ -7,7 +7,7 @@ import Footer from '../footer'
 import './app.css'
 
 export default class App extends React.Component {
-  maxId = 1000
+  maxId = Date.now() * 2
 
   state = {
     items: [
@@ -89,6 +89,11 @@ export default class App extends React.Component {
   }
 
   updateTimer = (id, time) => {
+    const checkExisting = this.state.items.find((el) => el.id === id)
+
+    if (!checkExisting) {
+      return
+    }
     this.setState(({ items }) => {
       const idx = items.findIndex((el) => el.id === id)
 
@@ -100,7 +105,7 @@ export default class App extends React.Component {
     })
   }
 
-  createNewTask(value, timer = 0) {
+  createNewTask(value, timer = 10) {
     return {
       text: value,
       completed: false,
@@ -108,7 +113,6 @@ export default class App extends React.Component {
       id: this.maxId++,
       date: new Date(),
       timer,
-      timerIsActive: false,
     }
   }
 
