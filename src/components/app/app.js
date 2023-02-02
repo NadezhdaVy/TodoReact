@@ -113,7 +113,6 @@ export default class App extends React.Component {
       id: this.maxId++,
       date: new Date(),
       timer,
-      timerIsActive: false,
     }
   }
 
