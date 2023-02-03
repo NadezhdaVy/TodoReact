@@ -5,7 +5,7 @@ import { formatDistanceToNow } from 'date-fns'
 import Timer from '../timer'
 import './task-item.css'
 
-function TaskItem({ value: { id, completed, text, timer, date }, onDeleted, onEdit, startTimer, onCompleted }) {
+function TaskItem({ value: { id, completed, text, date, timer }, onDeleted, onEdit, onCompleted, startTimer }) {
   const currentData = new Date()
   const dataOfCreation = date
 

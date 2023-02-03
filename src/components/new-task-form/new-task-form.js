@@ -14,14 +14,15 @@ function NewTaskForm({ onItemAdded }) {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+
     if (newItem.newTodo.trim()) {
       onItemAdded(convertToSeconds(newItem))
-      setNewItem({
-        newTodo: '',
-        min: '',
-        sec: '',
-      })
     }
+    setNewItem({
+      newTodo: '',
+      min: '',
+      sec: '',
+    })
   }
 
   const onValueChange = (e) => {

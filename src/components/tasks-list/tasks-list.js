@@ -8,6 +8,9 @@ import EditTask from '../edit-task'
 import './tasks-list.css'
 
 function TasksList({ onDeleted, onCompleted, todos, onEdit, onItemEditing, startTimer }) {
+  if (todos.length === 0) {
+    return []
+  }
   return (
     <ul className="todo-list">
       {todos.map((item) => (
