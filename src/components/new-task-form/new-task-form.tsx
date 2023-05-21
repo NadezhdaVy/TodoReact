@@ -1,34 +1,43 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
+import { ChangeEvent, FormEvent, useState } from 'react';
 
-import './new-task-form.css'
+import './new-task-form.css';
 
-function NewTaskForm({ onItemAdded }) {
-  const [newItem, setNewItem] = useState({ newTodo: '', min: '', sec: '' })
+interface INewTaskFormProps {
+  onItemAdded: (arg: [string, number]) => void;
+}
 
-  const convertToSeconds = (state) => {
-    const { newTodo, min, sec } = state
-    const seconds = min * 60 + Number(sec)
-    return [newTodo, seconds]
-  }
+interface IState {
+  newTodo: string;
+  min: string;
+  sec: string;
+}
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
+function NewTaskForm({ onItemAdded }: INewTaskFormProps) {
+  const [newItem, setNewItem] = useState({ newTodo: '', min: '', sec: '' });
+
+  const convertToSeconds = (state: IState): [string, number] => {
+    const { newTodo, min, sec } = state;
+    const seconds = Number(min) * 60 + Number(sec);
+    return [newTodo, seconds];
+  };
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     if (newItem.newTodo.trim()) {
-      onItemAdded(convertToSeconds(newItem))
+      onItemAdded(convertToSeconds(newItem));
     }
     setNewItem({
       newTodo: '',
       min: '',
       sec: '',
-    })
-  }
+    });
+  };
 
-  const onValueChange = (e) => {
-    const { value, name } = e.target
-    setNewItem((item) => ({ ...item, [name]: value }))
-  }
+  const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value, name } = e.target;
+    setNewItem((item) => ({ ...item, [name]: value }));
+  };
 
   return (
     <form onSubmit={handleSubmit} className="new-todo-form">
@@ -66,15 +75,7 @@ function NewTaskForm({ onItemAdded }) {
 
       <button aria-label="submit" type="submit" />
     </form>
-  )
+  );
 }
 
-NewTaskForm.defaultProps = {
-  onItemAdded: () => {},
-}
-
-NewTaskForm.propTypes = {
-  onItemAdded: PropTypes.func,
-}
-
-export default NewTaskForm
+export default NewTaskForm;
