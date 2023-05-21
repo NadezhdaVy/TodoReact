@@ -27,6 +27,8 @@ function Timer({ timer, startTimer, id }: ITimerProps) {
     }
   }, [seconds]);
 
+  // fix
+
   useEffect(() => {
     let interval: ReturnType<typeof setInterval> | null = null;
     if (isActive && seconds !== 0) {
