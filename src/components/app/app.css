@@ -41,9 +41,13 @@ body {
   outline: 0;
 }
 
+.hidden {
+  display: none;
+}
+
 .todoapp {
   background: #fff;
-  margin: 140px 0 40px 0;
+  margin: 130px 0 40px 0;
   position: relative;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 25px 50px 0 rgba(0, 0, 0, 0.1);
 }
@@ -81,4 +85,34 @@ body {
 
 .hidden {
   display: none;
+}
+
+/*
+	Hack to remove background from Mobile Safari.
+	Can't use it globally since it destroys checkboxes in Firefox
+*/
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  .toggle-all,
+  .todo-list li .toggle {
+    background: none;
+  }
+
+  .todo-list li .toggle {
+    height: 40px;
+  }
+}
+
+@media (max-width: 430px) {
+  .footer {
+    height: 70px;
+  }
+
+  .filters {
+    bottom: 10px;
+  }
+  .new-todo,
+  .new-todo-form .new-todo-form__timer {
+    padding: 16px 8px;
+    font-size: 1.4rem;
+  }
 }

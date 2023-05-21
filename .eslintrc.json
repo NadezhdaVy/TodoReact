@@ -1,51 +1,110 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true
-  },
-  "ignorePatterns": ["node_modules", "dist", "build"],
-  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
-  "parser": "@babel/eslint-parser",
-  "parserOptions": {
-    "requireConfigFile": false,
-    "babelOptions": {
-      "presets": ["@babel/preset-react"]
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": ["react", "prettier"],
-  "rules": {
-    "prettier/prettier": "error",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "quotes": ["error", "single"],
-    "semi": ["error", "never"],
-    "react/prop-types": 0,
-    "import/no-unresolved": [2, { "caseSensitive": false }],
-    "linebreak-style": [0, "unix"],
-    "react/forbid-prop-types": 0,
-    "react/destructuring-assignment": 0,
-    "react/prefer-stateless-function": 0,
-    "react/static-property-placement": 0,
-    "react/state-in-constructor": 0,
-    "class-methods-use-this": 0,
-    "no-plusplus": 0,
-    "no-param-reassign": 0,
-    "import/order": [
-      2,
-      {
-        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
-        "newlines-between": "always"
-      }
-    ]
-  },
-  "settings": {
-    "version": "detect",
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "moduleDirectory": ["node_modules", "src/"]
-      }
-    }
-  }
-}
+	"root": true,
+	"env": {
+	  "browser": true,
+	  "es2022": true,
+	  "node": true,
+	  "jest": true
+	},
+	"ignorePatterns": ["node_modules", "dist", "build"],
+	"extends": [
+	  "eslint:recommended",
+	  "plugin:react/recommended",
+	  "plugin:react-hooks/recommended",
+	  "plugin:react/jsx-runtime",
+	  "plugin:jsx-a11y/recommended",
+	  "plugin:import/errors",
+	  "plugin:import/warnings",
+	  "plugin:import/typescript",
+	  "plugin:@typescript-eslint/recommended",
+	  "eslint-config-prettier"
+	],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+	  "ecmaFeatures": {
+		 "jsx": true
+	  },
+	  "ecmaVersion": 13,
+	  "sourceType": "module",
+	  "project": ["tsconfig.json"]
+	},
+	"plugins": ["react", "@typescript-eslint", "import"],
+	"settings": {
+	  "react": {
+		 "version": "detect"
+	  },
+	  "import/resolver": {
+		 "typescript": {},
+		 "node": {
+			"paths": ["src"],
+			"extensions": [".js", ".jsx", ".ts", ".tsx"]
+		 }
+	  }
+	},
+	"overrides": [
+	  {
+		 "files": ["*.ts", "*.tsx"],
+		 "extends": ["plugin:@typescript-eslint/recommended"],
+		 "parserOptions": {
+			"project": ["tsconfig.json"],
+			"tsconfigRootDir": "./"
+		 }
+	  }
+	],
+	"rules": {
+	  "no-shadow": "off",
+	  "@typescript-eslint/no-shadow": ["error"],
+	  "@typescript-eslint/no-non-null-assertion": 0,
+	  "consistent-return": "off",
+	  "react/require-default-props": "off",
+	  "@typescript-eslint/no-unsafe-member-access": "off",
+	  "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+	  "@typescript-eslint/no-unsafe-argument": "off",
+	  "@typescript-eslint/restrict-template-expressions": "off",
+	  "import/no-extraneous-dependencies": [
+		 "error",
+		 {
+			"devDependencies": true
+		 }
+	  ],
+	  "class-methods-use-this": "off",
+	  "no-console": "off",
+	  "import/no-unresolved": [
+		 2,
+		 {
+			"caseSensitive": false
+		 }
+	  ],
+	  "import/prefer-default-export": "off",
+	  "import/extensions": "off",
+	  "linebreak-style": [0, "unix"],
+	  "quotes": ["error", "single"],
+	  "semi": ["error", "always"],
+	  "default-param-last": "off",
+	  "@typescript-eslint/default-param-last": "off",
+	  "@typescript-eslint/no-unsafe-assignment": "off",
+	  "no-param-reassign": [
+		 "error",
+		 {
+			"props": true,
+			"ignorePropertyModificationsFor": ["state", "config"]
+		 }
+	  ],
+	  "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+	  "no-unused-expressions": 0,
+	  "no-nested-ternary": "off",
+	  "no-restricted-syntax": [1, "always"],
+	  "react/jsx-filename-extension": [1, { "extensions": [".jsx", ".tsx"] }],
+	  "react/jsx-props-no-spreading": "off",
+	  "react/function-component-definition": "off",
+	  "react/react-in-jsx-scope": "off",
+	  "react/static-property-placement": "off",
+	  "import/order": [
+		 2,
+		 {
+			"groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+			"newlines-between": "always"
+		 }
+	  ]
+	}
+ }
