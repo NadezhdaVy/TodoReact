@@ -2,13 +2,16 @@ import { useState, useEffect, memo } from 'react';
 
 import './timer.css';
 
+import { useTasks } from '../../context/tasks-context';
+
 interface ITimerProps {
   timer: number;
-  startTimer: (id: number, time: number) => void;
   id: number;
 }
 
-function Timer({ timer, startTimer, id }: ITimerProps) {
+function Timer({ timer, id }: ITimerProps) {
+  const { updateTimer: startTimer } = useTasks();
+
   const [seconds, setSeconds] = useState(timer);
   const [isActive, setIsActive] = useState(false);
   const [time, setTime] = useState<{ m: number; s: number } | Record<string, never>>({});
@@ -44,7 +47,7 @@ function Timer({ timer, startTimer, id }: ITimerProps) {
       startTimer(id, seconds);
       clearInterval(interval as ReturnType<typeof setInterval>);
     };
-  }, [isActive, seconds, id]);
+  }, [isActive, seconds, id, startTimer]);
 
   const playTimer = () => {
     setIsActive(true);

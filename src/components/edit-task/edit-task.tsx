@@ -1,11 +1,14 @@
 import { ChangeEvent, useState, FormEvent } from 'react';
 
+import { useTasks } from '../../context/tasks-context';
+
 interface IEditTaskProps {
   task: { text: string; id: number };
-  onItemEditing: (value: string, id: number) => void;
 }
 
-function EditTask({ task: { text = '', id = 0 }, onItemEditing }: IEditTaskProps) {
+function EditTask({ task: { text = '', id = 0 } }: IEditTaskProps) {
+  const { updateItem } = useTasks();
+
   const [value, setValue] = useState(text);
 
   const onValueChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -14,7 +17,7 @@ function EditTask({ task: { text = '', id = 0 }, onItemEditing }: IEditTaskProps
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onItemEditing(value, id);
+    updateItem(value, id);
   };
 
   return (

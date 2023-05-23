@@ -1,10 +1,8 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 
-import './new-task-form.css';
+import { useTasks } from '../../context/tasks-context';
 
-interface INewTaskFormProps {
-  onItemAdded: (arg: [string, number]) => void;
-}
+import './new-task-form.css';
 
 interface IState {
   newTodo: string;
@@ -12,7 +10,8 @@ interface IState {
   sec: string;
 }
 
-function NewTaskForm({ onItemAdded }: INewTaskFormProps) {
+function NewTaskForm() {
+  const { addItem } = useTasks();
   const [newItem, setNewItem] = useState({ newTodo: '', min: '', sec: '' });
 
   const convertToSeconds = (state: IState): [string, number] => {
@@ -25,7 +24,7 @@ function NewTaskForm({ onItemAdded }: INewTaskFormProps) {
     event.preventDefault();
 
     if (newItem.newTodo.trim()) {
-      onItemAdded(convertToSeconds(newItem));
+      addItem(convertToSeconds(newItem));
     }
     setNewItem({
       newTodo: '',

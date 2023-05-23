@@ -1,13 +1,12 @@
 import './tasks-filter.css';
 
+import { memo } from 'react';
+
 import { TFilter } from '../../interfaces/interfaces';
+import { useFilter } from '../../context/tasks-context';
 
-interface ITasksFilterProps {
-  filter: TFilter | '';
-  onFilterChange: (filter: TFilter) => void;
-}
-
-function TasksFilter({ filter = 'all', onFilterChange }: ITasksFilterProps) {
+function TasksFilter() {
+  const { filters: filter, changeFilter } = useFilter();
   const allButtons = [
     { name: 'all', label: 'All' },
     { name: 'active', label: 'Active' },
@@ -19,7 +18,7 @@ function TasksFilter({ filter = 'all', onFilterChange }: ITasksFilterProps) {
     const className = selected ? 'selected' : '';
     return (
       <li key={name}>
-        <button onClick={() => onFilterChange(name as TFilter)} type="button" className={className}>
+        <button onClick={() => changeFilter(name as TFilter)} type="button" className={className}>
           {label}
         </button>
       </li>
@@ -29,4 +28,4 @@ function TasksFilter({ filter = 'all', onFilterChange }: ITasksFilterProps) {
   return <ul className="filters">{buttons}</ul>;
 }
 
-export default TasksFilter;
+export default memo(TasksFilter);
