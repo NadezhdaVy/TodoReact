@@ -3,34 +3,25 @@ import classNames from 'classnames';
 import TaskItem from '../task-item';
 import EditTask from '../edit-task';
 import './tasks-list.css';
-import { ITask } from '../../interfaces/interfaces';
+import { useTasks, useFilter } from '../../context/tasks-context';
+import { currentFilter } from '../../utils/utils';
 
-interface ITaskListProps {
-  onDeleted: (id: number) => void;
-  onCompleted: (id: number) => void;
-  todos: ITask[];
-  onEdit: (id: number) => void;
-  onItemEditing: (text: string, id: number) => void;
-  startTimer: (id: number, time: number) => void;
-}
+function TasksList() {
+  const { tasks } = useTasks();
+  const { filters: filter } = useFilter();
 
-function TasksList({ onDeleted, onCompleted, todos = [], onEdit, onItemEditing, startTimer }: ITaskListProps) {
-  if (todos.length === 0) {
+  const filteredTasks = currentFilter(tasks, filter);
+
+  if (tasks.length === 0) {
     return <ul />;
   }
   return (
     <ul className="todo-list">
-      {todos.map((item) => (
+      {filteredTasks.map((item) => (
         <li key={item.id} className={classNames({ completed: item.completed }, { editing: item.editing })}>
-          <TaskItem
-            startTimer={(id, time) => startTimer(id, time)}
-            value={item}
-            onEdit={() => onEdit(item.id)}
-            onDeleted={(id) => onDeleted(id)}
-            onCompleted={(id) => onCompleted(id)}
-          />
+          <TaskItem value={item} />
 
-          <EditTask task={item} onItemEditing={(text, id) => onItemEditing(text, id)} />
+          <EditTask task={item} />
         </li>
       ))}
     </ul>
